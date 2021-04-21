@@ -3,8 +3,6 @@ import cors from 'cors'
 import compression from 'compression'
 import path from 'path'
 import bodyParser from 'body-parser'
-import { errorHandler as queryErrorHandler } from 'querymen'
-import { errorHandler as bodyErrorHandler } from 'bodymen'
 import { get } from 'lodash'
 
 import { apiLogger, loggerMiddleware } from '../logger'
@@ -28,8 +26,6 @@ const errorHandler = (err, req, res, next) => {
 
   const axiosResponseData = err.isAxiosError && err.response && err.response.data
   const axiosError = err.isAxiosError && err.toJSON()
-
-
   const errMessage = typeof err === 'string' ? err : err.message
 
   apiLogger.error(`[Error] Message: ${errMessage}`, {
@@ -46,7 +42,7 @@ const errorHandler = (err, req, res, next) => {
     }
   })
 
-  return res.status(500).send('Internal Server Error');
+  return res.status(500).send('Internal Server Error')
 }
 
 export default (apiRoot, routes) => {
@@ -63,10 +59,8 @@ export default (apiRoot, routes) => {
 
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
-  app.use(loggerMiddleware);
+  app.use(loggerMiddleware)
   app.use(apiRoot, routes)
-  app.use(queryErrorHandler())
-  app.use(bodyErrorHandler())
   app.use(errorHandler)
 
   return app
