@@ -19,10 +19,11 @@ npm run docs # generate API docs
 
 ## Playing locally
 
-First, you will need to install and run [MongoDB](https://www.mongodb.com/) in another terminal instance.
-
+First, you will need to install and run PostgreSQL (12 version is recommended)
+> You should have docker to run following command
 ```bash
-$ mongod
+$ sh run_postgres.sh
+$ npm run dbmigrate
 ```
 
 Then, run the server in development mode.
@@ -105,9 +106,6 @@ heroku apps:create my-new-app
 # add heroku remote reference to the local repository
 heroku git:remote --app my-new-app
 
-# add the MongoLab addon to the heroku app
-heroku addons:create mongolab
-
 # set the environment variables to the heroku app (see the .env file in root directory)
 heroku config:set MASTER_KEY=masterKey JWT_SECRET=jwtSecret
 
@@ -137,19 +135,27 @@ You can customize the `src`, `models`, `routes` and `services` directories.
 ```
 src/
 ├─ models/
-│  └─ user_mongodb.js
-│  └─ user.test.js
+│  └─ social_network.js
+│  └─ user.js
 ├─ routes/
 │  ├─ users/
-│  │  ├─ controllers/
-│  │  ├─ middlewares/
+│  │  ├─ controller.js
 │  │  ├─ index.js
-│  │  ├─ index.test.js
+│  │  ├─ validationSchema.js
 │  └─ index.js
 ├─ services/
 │  ├─ express/
+│  ├─ apple/
+│  ├─ github/
+│  ├─ google/
+│  ├─ jwt/
+│  ├─ logger/
+│  ├─ mail/
+│  ├─ passport/
+│  ├─ postgres/
+│  ├─ response/
+│  ├─ vk/
 │  ├─ facebook/
-│  ├─ mongoose/
 │  ├─ passport/
 │  ├─ sendgrid/
 │  └─ your-service/
